@@ -33,7 +33,7 @@ public  class System extends JFrame  implements ActionListener{
        //start// JFrame Panels
        title = new JLabel();
        title.setBounds(69,25,150,100);
-       ImageIcon titleimg  = new ImageIcon(new ImageIcon("carinc.png").getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT));
+       ImageIcon titleimg  = new ImageIcon(new ImageIcon("images/carinc.png").getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT));
        title.setIcon(titleimg);
 
        bgshadow = new JPanel();
@@ -571,38 +571,38 @@ public  class System extends JFrame  implements ActionListener{
                         //start// images of car
                        fortuner = new JLabel();
                        fortuner.setBounds(15,-50,500,295);
-                       ImageIcon imgfortuner = new ImageIcon(new ImageIcon("fortuner.png").getImage().getScaledInstance(300, 177, Image.SCALE_DEFAULT));
+                       ImageIcon imgfortuner = new ImageIcon(new ImageIcon("images/fortuner.png").getImage().getScaledInstance(300, 177, Image.SCALE_DEFAULT));
                        fortuner.setIcon(imgfortuner);
                        carrentpanel.add(fortuner);
 
                        accord  = new JLabel();
                        accord.setBounds(635, -108, 500, 400);
-                       ImageIcon imgaccord  = new ImageIcon(new ImageIcon("accord.png").getImage().getScaledInstance(300, 169, Image.SCALE_DEFAULT));
+                       ImageIcon imgaccord  = new ImageIcon(new ImageIcon("images/accord.png").getImage().getScaledInstance(300, 169, Image.SCALE_DEFAULT));
                        accord.setIcon(imgaccord);
                        carrentpanel.add(accord);
 
                        hiace  = new JLabel();
                        hiace.setBounds(635, 135, 500, 400);
-                       ImageIcon imghiace  = new ImageIcon(new ImageIcon("hiace.jpg").getImage().getScaledInstance(300, 180, Image.SCALE_DEFAULT));
+                       ImageIcon imghiace  = new ImageIcon(new ImageIcon("images/hiace.jpg").getImage().getScaledInstance(300, 180, Image.SCALE_DEFAULT));
                        hiace.setIcon(imghiace);
                         carrentpanel.add(hiace);
 
 
                        wigo  = new JLabel();
                        wigo.setBounds(15, 135, 500, 400);
-                       ImageIcon imgwigo  = new ImageIcon(new ImageIcon("wigo.jpg").getImage().getScaledInstance(300, 200, Image.SCALE_DEFAULT));
+                       ImageIcon imgwigo  = new ImageIcon(new ImageIcon("images/wigo.jpg").getImage().getScaledInstance(300, 200, Image.SCALE_DEFAULT));
                        wigo.setIcon(imgwigo);
                        carrentpanel.add(wigo);
 
                        vios  = new JLabel();
                        vios.setBounds(635, 380, 500, 400);
-                       ImageIcon imgvios  = new ImageIcon(new ImageIcon("vios.jpg").getImage().getScaledInstance(300, 169, Image.SCALE_DEFAULT));
+                       ImageIcon imgvios  = new ImageIcon(new ImageIcon("images/vios.jpg").getImage().getScaledInstance(300, 169, Image.SCALE_DEFAULT));
                        vios.setIcon(imgvios);
                        carrentpanel.add(vios);
 
                        civic  = new JLabel();
                        civic.setBounds(15, 380, 500, 400);
-                       ImageIcon imgcivic  = new ImageIcon(new ImageIcon("civic.jpeg").getImage().getScaledInstance(300, 169, Image.SCALE_DEFAULT));
+                       ImageIcon imgcivic  = new ImageIcon(new ImageIcon("images/civic.jpeg").getImage().getScaledInstance(300, 169, Image.SCALE_DEFAULT));
                        civic.setIcon(imgcivic);
                        carrentpanel.add(civic);
 
@@ -827,7 +827,7 @@ public  class System extends JFrame  implements ActionListener{
                          
                                        JLabel fortunerimg = new JLabel();
                                        fortunerimg.setBounds(30,50,650,420);
-                                       ImageIcon fortunerIMG  = new ImageIcon(new ImageIcon("fortuner.png").getImage().getScaledInstance(550, 320, Image.SCALE_DEFAULT));
+                                       ImageIcon fortunerIMG  = new ImageIcon(new ImageIcon("images/fortuner.png").getImage().getScaledInstance(550, 320, Image.SCALE_DEFAULT));
                                        fortunerimg.setIcon(fortunerIMG);
                                        fortunerpanel.add(fortunerimg);                        
                                        
@@ -839,7 +839,7 @@ public  class System extends JFrame  implements ActionListener{
                                        
                                        fortunerreturnbtn = new JButton();
                                        fortunerreturnbtn.setBounds(930, 530,50,50);
-                                       ImageIcon rtnbtn  = new ImageIcon(new ImageIcon("return.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+                                       ImageIcon rtnbtn  = new ImageIcon(new ImageIcon("images/return.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
                                        fortunerreturnbtn.setBackground(Color.white);
                                        fortunerreturnbtn.setBorderPainted(false);
                                        fortunerreturnbtn.addActionListener(this);
@@ -915,7 +915,7 @@ public  class System extends JFrame  implements ActionListener{
                          
                                        JLabel accordimg = new JLabel();
                                        accordimg.setBounds(30,50,650,420);
-                                       ImageIcon accordIMG  = new ImageIcon(new ImageIcon("accord.png").getImage().getScaledInstance(550, 320, Image.SCALE_DEFAULT));
+                                       ImageIcon accordIMG  = new ImageIcon(new ImageIcon("images/accord.png").getImage().getScaledInstance(550, 320, Image.SCALE_DEFAULT));
                                        accordimg.setIcon(accordIMG);
                                        accordpanel.add(accordimg);                        
                                        
@@ -927,7 +927,7 @@ public  class System extends JFrame  implements ActionListener{
                                        
                                        accordreturnbtn = new JButton();
                                        accordreturnbtn.setBounds(930, 530,50,50);
-                                       ImageIcon accordrtnbtn  = new ImageIcon(new ImageIcon("return.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+                                       ImageIcon accordrtnbtn  = new ImageIcon(new ImageIcon("images/return.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
                                        accordreturnbtn.setBackground(Color.white);
                                        accordreturnbtn.setBorderPainted(false);
                                        accordreturnbtn.addActionListener(this);
@@ -1003,7 +1003,7 @@ public  class System extends JFrame  implements ActionListener{
                          
                                        JLabel wigoimg = new JLabel();
                                        wigoimg.setBounds(30,50,650,420);
-                                       ImageIcon wigoIMG  = new ImageIcon(new ImageIcon("wigo.jpg").getImage().getScaledInstance(550, 320, Image.SCALE_DEFAULT));
+                                       ImageIcon wigoIMG  = new ImageIcon(new ImageIcon("images/wigo.jpg").getImage().getScaledInstance(550, 320, Image.SCALE_DEFAULT));
                                        wigoimg.setIcon(wigoIMG);
                                        wigopanel.add(wigoimg);                        
                                        
@@ -1015,7 +1015,7 @@ public  class System extends JFrame  implements ActionListener{
                                        
                                        wigoreturnbtn = new JButton();
                                        wigoreturnbtn.setBounds(930, 530,50,50);
-                                       ImageIcon wigortnbtn  = new ImageIcon(new ImageIcon("return.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+                                       ImageIcon wigortnbtn  = new ImageIcon(new ImageIcon("images/return.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
                                        wigoreturnbtn.setBackground(Color.white);
                                        wigoreturnbtn.setBorderPainted(false);
                                        wigoreturnbtn.addActionListener(this);
@@ -1091,7 +1091,7 @@ public  class System extends JFrame  implements ActionListener{
                          
                                        JLabel civicimage = new JLabel();
                                        civicimage.setBounds(30,50,650,420);
-                                       ImageIcon civicimg  = new ImageIcon(new ImageIcon("civic.jpeg").getImage().getScaledInstance(550, 320, Image.SCALE_DEFAULT));
+                                       ImageIcon civicimg  = new ImageIcon(new ImageIcon("images/civic.jpeg").getImage().getScaledInstance(550, 320, Image.SCALE_DEFAULT));
                                        civicimage.setIcon(civicimg);
                                        civicpanel.add(civicimage);                        
                                        
@@ -1103,7 +1103,7 @@ public  class System extends JFrame  implements ActionListener{
                                        
                                        civicreturnbtn = new JButton();
                                        civicreturnbtn.setBounds(930, 530,50,50);
-                                       ImageIcon civicrbtn  = new ImageIcon(new ImageIcon("return.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+                                       ImageIcon civicrbtn  = new ImageIcon(new ImageIcon("images/return.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
                                        civicreturnbtn.setBackground(Color.white);
                                        civicreturnbtn.setBorderPainted(false);
                                        civicreturnbtn.addActionListener(this);
@@ -1179,7 +1179,7 @@ public  class System extends JFrame  implements ActionListener{
                          
                                        JLabel viosimage = new JLabel();
                                        viosimage.setBounds(30,50,650,420);
-                                       ImageIcon viosimg  = new ImageIcon(new ImageIcon("vios.jpg").getImage().getScaledInstance(550, 320, Image.SCALE_DEFAULT));
+                                       ImageIcon viosimg  = new ImageIcon(new ImageIcon("images/vios.jpg").getImage().getScaledInstance(550, 320, Image.SCALE_DEFAULT));
                                        viosimage.setIcon(viosimg);
                                        viospanel.add(viosimage);                        
                                        
@@ -1191,7 +1191,7 @@ public  class System extends JFrame  implements ActionListener{
                                        
                                        viosreturnbtn = new JButton();
                                        viosreturnbtn.setBounds(930, 530,50,50);
-                                       ImageIcon viosrtnbtn  = new ImageIcon(new ImageIcon("return.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+                                       ImageIcon viosrtnbtn  = new ImageIcon(new ImageIcon("images/return.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
                                        viosreturnbtn.setBackground(Color.white);
                                        viosreturnbtn.setBorderPainted(false);
                                        viosreturnbtn.addActionListener(this);
@@ -1265,7 +1265,7 @@ public  class System extends JFrame  implements ActionListener{
                          
                                        JLabel hiaceimage = new JLabel();
                                        hiaceimage.setBounds(30,50,650,420);
-                                       ImageIcon hiaceimg  = new ImageIcon(new ImageIcon("hiace.jpg").getImage().getScaledInstance(550, 320, Image.SCALE_DEFAULT));
+                                       ImageIcon hiaceimg  = new ImageIcon(new ImageIcon("images/hiace.jpg").getImage().getScaledInstance(550, 320, Image.SCALE_DEFAULT));
                                        hiaceimage.setIcon(hiaceimg);
                                        hiacepanel.add(hiaceimage);                        
                                        
@@ -1277,7 +1277,7 @@ public  class System extends JFrame  implements ActionListener{
                                        
                                        hiacereturnbtn = new JButton();
                                        hiacereturnbtn.setBounds(930, 530,50,50);
-                                       ImageIcon hiacertnbtn  = new ImageIcon(new ImageIcon("return.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+                                       ImageIcon hiacertnbtn  = new ImageIcon(new ImageIcon("images/return.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
                                        hiacereturnbtn.setBackground(Color.white);
                                        hiacereturnbtn.setBorderPainted(false);
                                        hiacereturnbtn.addActionListener(this);
@@ -1748,8 +1748,7 @@ public  class System extends JFrame  implements ActionListener{
                                     PreparedStatement pst;
                                     Double doublenum = Double.valueOf(bookreservinput.getText());
                                     String numref = bookreservinput.getText();
-                                    area10.setText(numref);
-                                    
+                                    area10.setText(numref);      
                                     boolean status = false;
                                     try {
                                      Class.forName("com.mysql.jdbc.Driver");
@@ -1757,8 +1756,7 @@ public  class System extends JFrame  implements ActionListener{
                                      Statement stm = con.createStatement();
                                      pst = con.prepareStatement("Select *  from carbookings where bookingID ='"+doublenum+"'");
                                      ResultSet myResults = pst.executeQuery();
-                                     myResults.next();
-                                     
+                                     myResults.next();            
                                      Double ID = myResults.getDouble("bookingID");      
                                          if(doublenum.compareTo(ID) == 0){
                                            String outpickup = myResults.getString("pickuplocation");
@@ -1783,12 +1781,12 @@ public  class System extends JFrame  implements ActionListener{
                                              area9.setText(chosencar);
                                      } else{
                                              JOptionPane.showMessageDialog(null, "No Booking # is in the database.", "Error", JOptionPane.ERROR_MESSAGE);
-                                                 return;
+                                             return;
                                          }
                                     }
                                         catch(Exception ex)
                                          {
-                                     JOptionPane.showMessageDialog(null, "Error Connecting to Data Base", "Error", JOptionPane.ERROR_MESSAGE);
+                                     JOptionPane.showMessageDialog(null, "No Booking # is in the database.", "Error", JOptionPane.ERROR_MESSAGE);
                                      return;
                                      }
                                     
