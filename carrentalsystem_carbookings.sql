@@ -34,8 +34,9 @@ CREATE TABLE `carbookings` (
   `phoneofbooker` varchar(15) DEFAULT NULL,
   `emailofbooker` varchar(30) DEFAULT NULL,
   `carofbooker` varchar(15) DEFAULT NULL,
+  `payment` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`bookingID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9072008412 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9925885936 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +45,6 @@ CREATE TABLE `carbookings` (
 
 LOCK TABLES `carbookings` WRITE;
 /*!40000 ALTER TABLE `carbookings` DISABLE KEYS */;
-INSERT INTO `carbookings` VALUES (1157758532,' San Pablo',' Paete','21 Jul 2023',' 21 Aug 2023',' 20 : 15',' 10 : 09','John Carlo Anñonuevo','09964564453','karlo@gmail.com','   Honda Civic'),(1277324850,' Victoria',' Paete','22 Jul 2023',' 23 Aug 2023',' 21 : 18',' 08 : 16','John Acel Vera Cruz','09964558123','johnacel@gmail.com','   Honda Civic'),(1864413860,' Biñan',' Biñan','4 May 2023',' 3 Mar 2023',' 02 : 01',' 01 : 01','Marc Ken E. Arbas','09184702466','codenamemonika@gmail.com',' Toyota Accord'),(3828203173,' Siniloan',' Nagcarlan','22 Jul 2023',' 16 Aug 2023',' 21 : 15',' 10 : 18','Iven Felix Seredilla	','09964558123','ivenfelix@gmail.com','Toyota Fortuner'),(8568197294,' San Pablo',' Pagsanjan','22 Jun 2023',' 15 Jul 2023',' 18 : 00',' 07 : 00','Marc Ken E. Arbas	','09184702566','marcken9@gmail.com	','Toyota Fortuner');
 /*!40000 ALTER TABLE `carbookings` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-27 10:14:15
+-- Dump completed on 2023-07-28 12:40:29
