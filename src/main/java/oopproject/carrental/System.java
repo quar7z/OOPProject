@@ -1,29 +1,44 @@
 package oopproject.carrental;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.sql.*;
-import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.border.Border;
+import com.itextpdf.layout.border.DashedBorder;
+import com.itextpdf.layout.border.SolidBorder;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 //Seredilla
 
 public  class System extends JFrame  implements ActionListener{
         private final JLabel title, fortuner, accord, civic, hiace, vios, wigo,fortunertext,accordtext,civictext,hiacetext,viostext,wigotext;
         private final JLabel fortunerprice, accordprice, civicprice,hiaceprice,viosprice,wigoprice;
-        private final JPanel bgshadow,titlebgclr,titlebgclrshadow, carrentpanel, bookreservpanl, caravailpanel, carrepairpanel, superpanel,bookreservnum,bookreservpanel,namepanel, bookingpanel;
+        private final JPanel bgshadow,titlebgclr,titlebgclrshadow, carrentpanel, bookreservpanl, caravailpanel, carrepairpanel, superpanel,bookreservnum,bookreservpanel,namepanel, bookingpanel, savepdf;
         private final JPanel fortunerpanel,accordpanel,civicpanel,hiacepanel,viospanel,wigopanel;
         private final JTextArea fortunerinfo,accordinfo,civicinfo,hiaceinfo,viosinfo,wigoinfo;
-        private final JTextArea infotext, infotext1,area,area1,area2,area3,area4,area5,area6,area7,area8,area9,area10,statusavailability;
-        private final JButton home,contin,submit,fortunerreturnbtn,go,accordreturnbtn,wigoreturnbtn,civicreturnbtn,hiacereturnbtn,viosreturnbtn, cancelbutton;
+        public static JTextArea infotext, infotext1,area,area1,area2,area3,area4,area5,area6,area7,area8,area9,area10,area11,area12,statusavailability,accordstatusavailability, wigoavailability, civicavailability, hiaceavailability, viosavailability;
+        private final JButton home,contin,submit,fortunerreturnbtn,go,accordreturnbtn,wigoreturnbtn,civicreturnbtn,hiacereturnbtn,viosreturnbtn, cancelbutton,savebutton;
         private final JButton clonefortunerbtn,cloneaccordbtn, clonecivicbtn, clonehiacebtn, cloneviosbtn, clonewigobtn;
         private final String greeting="Welcome!",txtr="        We at Cars Inc. offers cars that is cheap to rent but the cars we offer are known and high quality brand of cars. We also assure that the cars are well maintaned."; 
         private final String txtr1="        We are on the car renting business for 30 years, many people trusted us and purchased our services. We can assure you, our customer that you won't be disappointed on the services we offer.";
-        private final JComboBox pickupfield,dropofffield,Datefield,Mnth,Yr,dropDate,dropMonth,dropyear,pickuptime,dropofftime,pickmin,dropmin;
+        private final JComboBox pickupfield,dropofffield,Datefield,Mnth,Yr,dropDate,dropMonth,dropyear,pickuptime,dropofftime,pickmin,dropmin,paymentmethod;
         private final JTextArea pickuplocationarea,dropofffieldloc,datefieldloc,pickuptimeloc,chooseyourcar,pickminloc,dropminloc,nametextarea,phonenumbertextarea,emailtextarea,bookreservinput;
         
-      public  System(){
+      public System(){
         setSize(1600, 930);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -262,7 +277,7 @@ public  class System extends JFrame  implements ActionListener{
                            Mnth.addActionListener(this);
                            bookreservpanl.add(Mnth);
                            
-                           String[] pickupyear ={"2023"};
+                           String[] pickupyear ={"2023", "2024"};
                             Yr = new JComboBox(pickupyear);
                            Yr.setBounds(235,160,70,26);
                            Yr.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -290,7 +305,7 @@ public  class System extends JFrame  implements ActionListener{
                            dropMonth.addActionListener(this);
                            bookreservpanl.add(dropMonth);
                            
-                           String[] dropoffyear ={"2023"};
+                           String[] dropoffyear ={"2023","2024"};
                             dropyear = new JComboBox(dropoffyear);
                            dropyear.setBounds(235,205,70,26);
                            dropyear.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -364,7 +379,7 @@ public  class System extends JFrame  implements ActionListener{
                            bookreservpanl.add(bookcontent);
                            
        bookreservpanel = new JPanel();
-       bookreservpanel.setBounds(10,155,330,390);
+       bookreservpanel.setBounds(10,160,330,400);
        bookreservpanel.setBackground(Color.white);
        bookreservpanel.setLayout(null);
        bookreservpanel.setVisible(false);
@@ -480,8 +495,8 @@ public  class System extends JFrame  implements ActionListener{
                            bookreservpanel.add(bookcontitleshadow);
                            
        namepanel = new JPanel();
-       namepanel.setBounds(10,580,330,240);
-       namepanel.setBackground(Color.white);
+       namepanel.setBounds(10,580,330,280);
+       namepanel.setBackground(Color.WHITE);
        namepanel.setLayout(null);
        namepanel.setVisible(false);
        add(namepanel);
@@ -509,6 +524,12 @@ public  class System extends JFrame  implements ActionListener{
                            phonenum.setFont(new Font("Arial", Font.BOLD, 15));
                            phonenum.setForeground(Color.black);
                            namepanel.add(phonenum);
+                           
+                            JLabel payment = new JLabel("Payment:");
+                           payment.setBounds(10,205,130,20);
+                           payment.setFont(new Font("Arial", Font.BOLD, 15));
+                           payment.setForeground(Color.black);
+                           namepanel.add(payment);
                            
                            
                             //////////////////////////////////////////////////////////////////////////////
@@ -538,9 +559,18 @@ public  class System extends JFrame  implements ActionListener{
                            namepanel.add(phonenumbertextarea);
                            
                            
+                           String[] pyment = {"Credit Card","Cash"};
+                           paymentmethod = new JComboBox(pyment);
+                           paymentmethod.setBounds(90,205,200,20);
+                           paymentmethod.setFont(new Font("Arial", Font.PLAIN, 17));
+                           paymentmethod.setForeground(Color.black);
+                           paymentmethod.setBackground(Color.lightGray);
+                           namepanel.add(paymentmethod);
+                           
+                           
                            ///////////////////////////////////////////////////////////////////////////////
                             submit = new JButton("Submit");
-                           submit.setBounds(180,200,120,26);
+                           submit.setBounds(185,245,120,25);
                            submit.setFont(new Font("Arial", Font.BOLD, 15));
                            submit.setForeground(Color.black);
                            submit.setBackground(Color.lightGray);
@@ -716,38 +746,38 @@ public  class System extends JFrame  implements ActionListener{
                        
                        ///////////////////////////////////////////////////////////////
                        
-                       fortunerprice = new JLabel("₱1,699/8hrs   or   ₱2,599/24hrs");
-                       fortunerprice.setBounds(330,150,400,100);
+                       fortunerprice = new JLabel("₱1,699/8hrs");
+                       fortunerprice.setBounds(480,150,400,100);
                        fortunerprice.setFont(new Font("Arial", Font.BOLD, 20));
                        fortunerprice.setForeground(Color.BLACK);
                        carrentpanel.add(fortunerprice);
                        
-                       accordprice = new JLabel("₱1,499/8hrs   or   ₱2,399/24hrs");
-                       accordprice.setBounds(945, 150, 400,100);
+                       accordprice = new JLabel("₱1,699/8hrs");
+                       accordprice.setBounds(1125, 150, 400,100);
                        accordprice.setFont(new Font("Arial", Font.BOLD, 20));
                        accordprice.setForeground(Color.BLACK);
                        carrentpanel.add(accordprice);
                        
-                       civicprice = new JLabel("₱1,899/8hrs   or   ₱2,899/24hrs");
-                       civicprice.setBounds(330, 635, 400,100);
+                       civicprice = new JLabel("₱1,699/8hrs");
+                       civicprice.setBounds(480, 635, 400,100);
                        civicprice.setFont(new Font("Arial", Font.BOLD, 20));
                        civicprice.setForeground(Color.BLACK);
                        carrentpanel.add(civicprice);
                        
-                       viosprice = new JLabel("₱1,799/8hrs   or   ₱2,699/24hrs");
-                       viosprice.setBounds(945,635, 400,100);
+                       viosprice = new JLabel("₱1,699/8hrs");
+                       viosprice.setBounds(1125,635, 400,100);
                        viosprice.setFont(new Font("Arial", Font.BOLD, 20));
                        viosprice.setForeground(Color.BLACK);
                        carrentpanel.add(viosprice);
                        
-                       wigoprice = new JLabel("₱1,599/8hrs   or   ₱2,499/24hrs");
-                       wigoprice.setBounds(330, 395, 400,100);
+                       wigoprice = new JLabel("₱1,699/8hrs");
+                       wigoprice.setBounds(480, 395, 400,100);
                        wigoprice.setFont(new Font("Arial", Font.BOLD, 20));
                        wigoprice.setForeground(Color.BLACK);
                        carrentpanel.add(wigoprice);
                        
-                       hiaceprice = new JLabel("₱2,099/8hrs   or   ₱3,099/24hrs");
-                       hiaceprice.setBounds(945, 395, 400,100);
+                       hiaceprice = new JLabel("₱1,699/8hrs");
+                       hiaceprice.setBounds(1125, 395, 400,100);
                        hiaceprice.setFont(new Font("Arial", Font.BOLD, 20));
                        hiaceprice.setForeground(Color.BLACK);
                        carrentpanel.add(hiaceprice);
@@ -853,7 +883,7 @@ public  class System extends JFrame  implements ActionListener{
                                        fortunerstatus.setForeground(Color.black);
                                        fortunerpanel.add(fortunerstatus);
                                        
-                                       statusavailability = new JTextArea("");
+                                       statusavailability = new JTextArea("Available");
                                        statusavailability.setBounds(740,535,500,100);
                                        statusavailability.setFont(new Font("Arial", Font.BOLD, 25));
                                        statusavailability.setForeground(Color.GREEN);
@@ -941,7 +971,7 @@ public  class System extends JFrame  implements ActionListener{
                                        accordstatus.setForeground(Color.black);
                                        accordpanel.add(accordstatus);
                                        
-                                       JTextArea accordstatusavailability = new JTextArea("Available");
+                                       accordstatusavailability = new JTextArea("Available");
                                        accordstatusavailability.setBounds(740,535,500,100);
                                        accordstatusavailability.setFont(new Font("Arial", Font.BOLD, 25));
                                        accordstatusavailability.setForeground(Color.GREEN);
@@ -1029,7 +1059,7 @@ public  class System extends JFrame  implements ActionListener{
                                        wigostatus.setForeground(Color.black);
                                        wigopanel.add(wigostatus);
                                        
-                                       JTextArea wigoavailability = new JTextArea("Available");
+                                        wigoavailability = new JTextArea("Available");
                                        wigoavailability.setBounds(740,535,500,100);
                                        wigoavailability.setFont(new Font("Arial", Font.BOLD, 25));
                                        wigoavailability.setForeground(Color.GREEN);
@@ -1117,7 +1147,7 @@ public  class System extends JFrame  implements ActionListener{
                                        civicstatus.setForeground(Color.black);
                                        civicpanel.add(civicstatus);
                                        
-                                       JTextArea civicavailability = new JTextArea("Available");
+                                        civicavailability = new JTextArea("Available");
                                        civicavailability.setBounds(740,535,500,100);
                                        civicavailability.setFont(new Font("Arial", Font.BOLD, 25));
                                        civicavailability.setForeground(Color.GREEN);
@@ -1205,7 +1235,7 @@ public  class System extends JFrame  implements ActionListener{
                                        viosstatus.setForeground(Color.black);
                                        viospanel.add(viosstatus);
                                        
-                                       JTextArea viosavailability = new JTextArea("Available");
+                                        viosavailability = new JTextArea("Available");
                                        viosavailability.setBounds(740,535,500,100);
                                        viosavailability.setFont(new Font("Arial", Font.BOLD, 25));
                                        viosavailability.setForeground(Color.GREEN);
@@ -1291,7 +1321,7 @@ public  class System extends JFrame  implements ActionListener{
                                        hiacestatus.setForeground(Color.black);
                                        hiacepanel.add(hiacestatus);
                                        
-                                       JTextArea hiaceavailability = new JTextArea("Available");
+                                        hiaceavailability = new JTextArea("Available");
                                        hiaceavailability.setBounds(740,535,500,100);
                                        hiaceavailability.setFont(new Font("Arial", Font.BOLD, 25));
                                        hiaceavailability.setForeground(Color.GREEN);
@@ -1363,7 +1393,7 @@ public  class System extends JFrame  implements ActionListener{
                            bookingpanel.add(bookingitle);
                            
                                        area10 = new JTextArea("");
-                                       area10.setBounds(280,18,400,30);
+                                       area10.setBounds(280,18,200,30);
                                        area10.setFont(new Font("Arial", Font.PLAIN, 28));
                                        area10.setForeground(Color.white);
                                        area10.setBackground(new Color(24,70,53));
@@ -1379,7 +1409,7 @@ public  class System extends JFrame  implements ActionListener{
                            bookingpanel.add(pickupname);
                            
                                        area = new JTextArea("");
-                                       area.setBounds(65,130,400,30);
+                                       area.setBounds(65,130,200,30);
                                        area.setFont(new Font("Arial", Font.PLAIN, 28));
                                        area.setForeground(Color.black);
                                        area.setLineWrap(true);
@@ -1394,7 +1424,7 @@ public  class System extends JFrame  implements ActionListener{
                            bookingpanel.add(dropoffpname);
                            
                                      area1 = new JTextArea("");
-                                       area1.setBounds(65,230,400,30);
+                                       area1.setBounds(65,230,200,30);
                                        area1.setFont(new Font("Arial", Font.PLAIN, 28));
                                        area1.setForeground(Color.black);
                                        area1.setLineWrap(true);
@@ -1409,7 +1439,7 @@ public  class System extends JFrame  implements ActionListener{
                            bookingpanel.add(pickuplocname);
                            
                                        area2 = new JTextArea("");
-                                       area2.setBounds(65,330,400,30);
+                                       area2.setBounds(65,330,200,30);
                                        area2.setFont(new Font("Arial", Font.PLAIN, 28));
                                        area2.setForeground(Color.black);
                                        area2.setLineWrap(true);
@@ -1417,14 +1447,14 @@ public  class System extends JFrame  implements ActionListener{
                                         area2.setWrapStyleWord(true);
                                        bookingpanel.add(area2);                
                                        
-                           JLabel dropoffnameloc = new JLabel("Drop-Off Time"); //title for details
+                           JLabel dropoffnameloc = new JLabel("Drop-Off Date"); //title for details
                            dropoffnameloc.setBounds(65,390,250,25);
                            dropoffnameloc.setFont(new Font("Arial", Font.BOLD, 23));
                            dropoffnameloc.setForeground(Color.white);
                            bookingpanel.add(dropoffnameloc);
                            
                                        area3 = new JTextArea("");
-                                       area3.setBounds(65,430,400,30);
+                                       area3.setBounds(65,430,200,30);
                                        area3.setFont(new Font("Arial", Font.PLAIN, 28));
                                        area3.setForeground(Color.black);
                                        area3.setLineWrap(true);
@@ -1439,7 +1469,7 @@ public  class System extends JFrame  implements ActionListener{
                            bookingpanel.add(pickuptimee);
                            
                                        area4 = new JTextArea("");
-                                       area4.setBounds(65,530,400,30);
+                                       area4.setBounds(65,530,200,30);
                                        area4.setFont(new Font("Arial", Font.PLAIN, 28));
                                        area4.setForeground(Color.black);
                                        area4.setLineWrap(true);
@@ -1447,12 +1477,12 @@ public  class System extends JFrame  implements ActionListener{
                                         area4.setWrapStyleWord(true);
                                        bookingpanel.add(area4);      
                           JLabel dropofftimee = new JLabel("Drop-Off Time"); //title for details
-                           dropofftimee.setBounds(630,90,250,25);
+                           dropofftimee.setBounds(385,90,250,25);
                            dropofftimee.setFont(new Font("Arial", Font.BOLD, 23));
                            dropofftimee.setForeground(Color.white);
                            bookingpanel.add(dropofftimee);
                                         area5 = new JTextArea("");
-                                       area5.setBounds(630,130,400,30);
+                                       area5.setBounds(380,130,200,30);
                                        area5.setFont(new Font("Arial", Font.PLAIN, 28));
                                        area5.setForeground(Color.black);
                                        area5.setLineWrap(true);
@@ -1460,13 +1490,13 @@ public  class System extends JFrame  implements ActionListener{
                                         area5.setWrapStyleWord(true);
                                        bookingpanel.add(area5);   
                            JLabel nameofbooking = new JLabel("Name"); //title for details
-                           nameofbooking.setBounds(630,190,250,25);
+                           nameofbooking.setBounds(705,90,250,25);
                            nameofbooking.setFont(new Font("Arial", Font.BOLD, 23));
                            nameofbooking.setForeground(Color.white);
                            bookingpanel.add(nameofbooking);
                            
                                        area6 = new JTextArea("");
-                                       area6.setBounds(630,230,400,30);
+                                       area6.setBounds(705,130,200,30);
                                        area6.setFont(new Font("Arial", Font.PLAIN, 23));
                                        area6.setForeground(Color.black);;
                                        area6.setLineWrap(true);
@@ -1475,13 +1505,13 @@ public  class System extends JFrame  implements ActionListener{
                                        bookingpanel.add(area6);   
                                        
                            JLabel phoneofbooking = new JLabel("Phone Number"); //title for details
-                           phoneofbooking.setBounds(630,290,250,25);
+                           phoneofbooking.setBounds(705,190,250,25);
                            phoneofbooking.setFont(new Font("Arial", Font.BOLD, 23));
                            phoneofbooking.setForeground(Color.white);
                            bookingpanel.add(phoneofbooking);
                            
                                        area7 = new JTextArea("");
-                                       area7.setBounds(630,330,400,30);
+                                       area7.setBounds(705,230,200,30);
                                        area7.setFont(new Font("Arial", Font.PLAIN, 28));
                                        area7.setForeground(Color.black);
                                        area7.setLineWrap(true);
@@ -1490,13 +1520,13 @@ public  class System extends JFrame  implements ActionListener{
                                        bookingpanel.add(area7);        
                                        
                             JLabel emailofchoosing = new JLabel("Email Address"); //title for details
-                           emailofchoosing.setBounds(630,390,250,25);
+                           emailofchoosing.setBounds(705,290,300,25);
                            emailofchoosing.setFont(new Font("Arial", Font.BOLD, 20));
                            emailofchoosing.setForeground(Color.white);
                            bookingpanel.add(emailofchoosing);
                            
                                         area8 = new JTextArea("");
-                                       area8.setBounds(630,430,400,30);
+                                       area8.setBounds(705,330,250,30);
                                        area8.setFont(new Font("Arial", Font.PLAIN, 23));
                                        area8.setForeground(Color.black);
                                        area8.setLineWrap(true);
@@ -1505,28 +1535,43 @@ public  class System extends JFrame  implements ActionListener{
                                        bookingpanel.add(area8); 
                                        
                                JLabel carofchoosing = new JLabel("Car to Rent"); //title for details
-                           carofchoosing.setBounds(630,490,250,25);
+                           carofchoosing.setBounds(705,390,250,25);
                            carofchoosing.setFont(new Font("Arial", Font.BOLD, 23));
                            carofchoosing.setForeground(Color.white);
                            bookingpanel.add(carofchoosing);
                            
                                         area9 = new JTextArea("");
-                                       area9.setBounds(630,530,400,30);
+                                       area9.setBounds(705,430,200,30);
                                        area9.setFont(new Font("Arial", Font.PLAIN, 28));
                                        area9.setLineWrap(true);
                                        area9.setEditable(false);
                                         area9.setWrapStyleWord(true);
                                        bookingpanel.add(area9); 
                                        
+                                       
+                           JLabel paymenttext = new JLabel("Payment Method"); //title for details
+                           paymenttext.setBounds(705,490,250,25);
+                           paymenttext.setFont(new Font("Arial", Font.BOLD, 23));
+                           paymenttext.setForeground(Color.white);
+                           bookingpanel.add(paymenttext);
+                           
+                                        area12 = new JTextArea("");
+                                       area12.setBounds(705,530,200,30);
+                                       area12.setFont(new Font("Arial", Font.PLAIN, 28));
+                                       area12.setLineWrap(true);
+                                       area12.setEditable(false);
+                                        area12.setWrapStyleWord(true);
+                                       bookingpanel.add(area12); 
+                                       
                            cancelbutton = new JButton("Go Back");
-                           cancelbutton.setBounds(780, 600, 150,35);
+                           cancelbutton.setBounds(830, 600, 150,35);
                            cancelbutton.setFont(new Font("Arial", Font.BOLD, 18));
                            cancelbutton.setForeground(Color.black);
                            cancelbutton.setBackground(Color.lightGray);
                            cancelbutton.addActionListener(this);
                            cancelbutton.setBorderPainted(false);
                            cancelbutton.setFocusPainted(false);
-                            bookingpanel.add(cancelbutton);                  
+                            bookingpanel.add(cancelbutton);                                  
  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             JPanel areabg = new JPanel();
@@ -1560,46 +1605,100 @@ public  class System extends JFrame  implements ActionListener{
                             bookingpanel.add(areabg4);  
                             
                              JPanel areabg5 = new JPanel();
-                            areabg5.setBounds(625,87,205,35);
+                            areabg5.setBounds(380,87,205,35);
                             areabg5.setBackground(new Color(24,70,53));
                             areabg5.setLayout(null);
                             bookingpanel.add(areabg5);  
                             
                              JPanel areabg6 = new JPanel();
-                            areabg6.setBounds(625,187,205,35);
+                            areabg6.setBounds(700,187,205,35);
                             areabg6.setBackground(new Color(24,70,53));
                             areabg6.setLayout(null);
                             bookingpanel.add(areabg6);  
                             
                              JPanel areabg7 = new JPanel();
-                            areabg7.setBounds(625,287,205,35);
+                            areabg7.setBounds(700,287,205,35);
                             areabg7.setBackground(new Color(24,70,53));
                             areabg7.setLayout(null);
                             bookingpanel.add(areabg7);
                             
                              JPanel areabg8 = new JPanel();
-                            areabg8.setBounds(625,387,205,35);
+                            areabg8.setBounds(700,387,205,35);
                             areabg8.setBackground(new Color(24,70,53));
                             areabg8.setLayout(null);
                             bookingpanel.add(areabg8);  
                             
                              JPanel areabg9 = new JPanel();
-                            areabg9.setBounds(625,487,205,35);
+                            areabg9.setBounds(700,487,205,35);
                             areabg9.setBackground(new Color(24,70,53));
                             areabg9.setLayout(null);
                             bookingpanel.add(areabg9);  
+                            
+                            JPanel areabg10 = new JPanel();
+                            areabg10.setBounds(700,87,205,35);
+                            areabg10.setBackground(new Color(24,70,53));
+                            areabg10.setLayout(null);
+                            bookingpanel.add(areabg10);  
          ////////////////////////////////////////////////////////////////////////////////////////                   
                             JPanel greenbg = new JPanel();
                             greenbg.setBounds(0,0,1000,60);
                             greenbg.setBackground(new Color(24,70,53));
                             greenbg.setLayout(null);
                             bookingpanel.add(greenbg);
-        
+                            
+        savepdf = new JPanel();
+        savepdf.setBounds(290,155,1000,650);
+        savepdf.setBackground(Color.white);
+        savepdf.setLayout(null);
+        savepdf.hide();
+        add(savepdf);
+                        
+                            JLabel bookingnum = new JLabel("Your Booking #: "); //title for details
+                           bookingnum.setBounds(65,14,330,40);
+                           bookingnum.setFont(new Font("Arial", Font.BOLD, 28));
+                           bookingnum.setForeground(Color.white);
+                           savepdf.add(bookingnum);
+                           
+                            JLabel warning = new JLabel("Please Save your Booking Number & Rental Invoice."); //title for details
+                           warning.setBounds(160,200,6000,40);
+                           warning.setFont(new Font("Arial", Font.BOLD, 28));
+                           warning.setForeground(Color.black);
+                           savepdf.add(warning);
+                           
+                           area11 = new JTextArea("");
+                           area11.setBounds(280,18,200,30);
+                           area11.setFont(new Font("Arial", Font.PLAIN, 28));
+                           area11.setForeground(Color.white);
+                           area11.setBackground(new Color(24,70,53));
+                           area11.setLineWrap(true);
+                           area11.setEditable(false);
+                            area11.setWrapStyleWord(true);
+                           savepdf.add(area11);
+                           
+                           
+                           savebutton = new JButton("Save Your Rental Invoice");
+                           savebutton.setBounds(380, 600, 250,35);
+                           savebutton.setFont(new Font("Arial", Font.BOLD, 18));
+                           savebutton.setForeground(Color.black);
+                           savebutton.setBackground(Color.lightGray);
+                           savebutton.addActionListener(this);
+                           savebutton.setBorderPainted(false);
+                           savebutton.setFocusPainted(false);
+                            savepdf.add(savebutton);                               
+ //////////////////////////////////////////////////////////////////////////////////////////////////                          
+                           
+                            JPanel greenbgsavepdf = new JPanel();
+                            greenbgsavepdf.setBounds(0,0,1000,60);
+                            greenbgsavepdf.setBackground(new Color(24,70,53));
+                            greenbgsavepdf.setLayout(null);
+                            savepdf.add(greenbgsavepdf);
+                            
        superpanel = new JPanel();
        superpanel.setBounds(0,0,1600,1280);
        superpanel.setBackground(Color.lightGray);
        superpanel.setVisible(true);
        superpanel.setLayout(null);
+       superpanel.add(savepdf);
        superpanel.add(bookingpanel);
        superpanel.add(fortunerpanel);
        superpanel.add(accordpanel);
@@ -1627,7 +1726,11 @@ public  class System extends JFrame  implements ActionListener{
         while(true){
             bookreservinput.setText("");
             break;
-        }   
+        }
+        while(true){
+            paymentmethod.setSelectedItem(null);
+            break;
+        }
       }
      
     @Override
@@ -1689,6 +1792,7 @@ public  class System extends JFrame  implements ActionListener{
                 namepanel.hide();   
                 bookreservpanel.hide();
                 fortunerpanel.hide();
+                bookreservinput.setText("");
                 for(JButton fakebtn : arrayclonebutton){
                     fakebtn.hide();
                 }
@@ -1709,7 +1813,9 @@ public  class System extends JFrame  implements ActionListener{
                 bookreservpanel.hide();
                 fortunerpanel.hide();
                 bookingpanel.hide();
+                savepdf.hide();
                 //////////////////////////////////////////////////////////
+                paymentmethod.setSelectedItem(null);
                 bookreservinput.setText("");
                 for(JLabel carpice : price){
                     carpice.show();
@@ -1769,6 +1875,7 @@ public  class System extends JFrame  implements ActionListener{
                                              String  outphone = myResults.getString("phoneofbooker");
                                              String outemail = myResults.getString("emailofbooker");
                                              String chosencar = myResults.getString("carofbooker");
+                                             String paymntmthd = myResults.getString("payment");
                                              area.setText(outpickup);
                                              area1.setText(outdropoff);
                                              area2.setText(outpickupdate);
@@ -1779,6 +1886,7 @@ public  class System extends JFrame  implements ActionListener{
                                              area7.setText(outphone);
                                              area8.setText(outemail);
                                              area9.setText(chosencar);
+                                             area12.setText(paymntmthd);
                                      } else{
                                              JOptionPane.showMessageDialog(null, "No Booking # is in the database.", "Error", JOptionPane.ERROR_MESSAGE);
                                              return;
@@ -1788,8 +1896,7 @@ public  class System extends JFrame  implements ActionListener{
                                          {
                                      JOptionPane.showMessageDialog(null, "No Booking # is in the database.", "Error", JOptionPane.ERROR_MESSAGE);
                                      return;
-                                     }
-                                    
+                                     }             
                      bookreservpanl.hide();
                      bookreservpanel.hide();
                      bookreservnum.hide();
@@ -1799,8 +1906,8 @@ public  class System extends JFrame  implements ActionListener{
             }     
            
                     if(e.getSource() == submit){
-                        JTextArea[] detailsarray = new JTextArea[]{nametextarea, phonenumbertextarea, emailtextarea};
                         
+                        JTextArea[] detailsarray = new JTextArea[]{nametextarea, phonenumbertextarea, emailtextarea};
                         String number = phonenumbertextarea.getText();
                         String chosencar = chooseyourcar.getText().trim();
                        double x = 11;
@@ -1815,7 +1922,7 @@ public  class System extends JFrame  implements ActionListener{
                             }
                             else if(number.trim().length() != 11){
                                  JOptionPane.showMessageDialog(null, "Phone # must be 11 digits.", "Error", JOptionPane.ERROR_MESSAGE);
-                              return;
+                             return;
                             }else{  
                                      try {
                                       x = Double.parseDouble(phonenumbertextarea.getText());
@@ -1825,6 +1932,10 @@ public  class System extends JFrame  implements ActionListener{
                                         return;
                                     }
                                     }
+                            if(paymentmethod.getSelectedItem() == null){
+                              JOptionPane.showMessageDialog(null, "Please Select Payment Method.", "Error", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
                             if(chosencar.equals("")){
                                 JOptionPane.showMessageDialog(null, "Please Select a Car.", "Error", JOptionPane.ERROR_MESSAGE);
                                         return;
@@ -1833,33 +1944,124 @@ public  class System extends JFrame  implements ActionListener{
                               for(JPanel panels : arraypanel){
                                   panels.hide();
                                   bookreservpanel.hide();
-                                  namepanel.hide();                 
+                                  namepanel.hide();     
+                                  carrentpanel.hide();
                               }
                             }                                                       
                      }
                        ///////////////////////////////////////////////////////////////////////////////////   
-                                    String url = "jdbc:mysql://localhost:3306/carrentalsystem";
-                                    String user = "root";
+                                     String url = "jdbc:mysql://localhost:3306/carrentalsystem";
+                                     String user = "root";
                                      String pass = "rootAdmin";
-                                      PreparedStatement pst;  
-                                       long numberrandom = (long) Math.floor(Math.random() * 9_000_000_000L) + 1_000_000_000L;
-                                      String pickuptext = pickuplocationarea.getText(); //TEXT AREA
-                                       String dropofftext = dropofffieldloc.getText();
-                                       String update = datefieldloc.getText();
-                                       String dropdate = pickuptimeloc.getText();
-                                      String timepick = pickminloc.getText();
-                                      String timedrop = dropminloc.getText();
-                                      String nameofbook = nametextarea.getText();
-                                      String phoneofbook = phonenumbertextarea.getText();
-                                      String emailaddofbook = emailtextarea.getText(); //TEXT AREA
-                                      String carofchosen = chooseyourcar.getText();             
-                                     
+                                     PreparedStatement pst;  
+                                     area11.setText("");
+                                     long numberrandom = (long) Math.floor(Math.random() * 9_000_000_000L) + 1_000_000_000L;
+                                     String numID = String.valueOf(numberrandom);
+                                     area11.setText(numID);
+                                     String pickuptext = pickuplocationarea.getText(); //TEXT AREA
+                                     String dropofftext = dropofffieldloc.getText();
+                                     String update = datefieldloc.getText();
+                                     String dropdate = pickuptimeloc.getText();
+                                     String timepick = pickminloc.getText();
+                                     String timedrop = dropminloc.getText();
+                                     String nameofbook = nametextarea.getText();
+                                     String phoneofbook = phonenumbertextarea.getText();
+                                     String emailaddofbook = emailtextarea.getText(); //TEXT AREA
+                                     String carofchosen = chooseyourcar.getText();    
+                                     String payment = String.valueOf(paymentmethod.getSelectedItem());
+                                     try
+                                     {
+                                     Class.forName("com.mysql.jdbc.Driver");
+                                     Connection con = DriverManager.getConnection(url, user,pass );     
+                                     Statement stm = con.createStatement();
+                                     pst = con.prepareStatement("select * from carbookings where carofbooker = ?");
+                                     pst.setString(1, carofchosen);
+                                     ResultSet set = pst.executeQuery();                                  
+                                      while(set.next()){
+                                         String str1 = set.getString("carofbooker");                                  
+                                          if(str1.equals(carofchosen)){
+                                                JOptionPane.showMessageDialog(null, "The Car you chose has been booked already", "Error", JOptionPane.ERROR_MESSAGE);       
+                                                while(true){
+                                                    carrentpanel.show();
+                                                    namepanel.show();
+                                                    bookreservpanel.show();
+                                                    break;
+                                                }             
+                                          }
+                                          while(true){  
+                                             String str2 = "Toyota Fortuner";
+                                              String str3 = "Honda Accord";
+                                            String str4 = "Toyota Wigo";
+                                            String str5 = "Toyota Hiace";
+                                            String str6 = "Honda Civic";
+                                            String str7 = "Toyota Vios";
+                                          if(str2.equals(carofchosen)){
+                                              statusavailability.setText("Unavailable");
+                                              statusavailability.setForeground(Color.red);
+                                          }
+                                          else{
+                                              statusavailability.setText("Available");
+                                              statusavailability.setForeground(Color.green);
+                                          }
+                                          /////////////////////////////////////////////////////////////
+                                          if(str3.equals(carofchosen)){
+                                              accordstatusavailability.setText("Unavailable");
+                                              accordstatusavailability.setForeground(Color.red);
+                                          }
+                                          else{
+                                              accordstatusavailability.setText("Available");
+                                              accordstatusavailability.setForeground(Color.green);
+                                            }
+                                            //////////////////////////////////////////////////////////////
+                                            if(str4.equals(carofchosen)){
+                                              wigoavailability.setText("Unavailable");
+                                              wigoavailability.setForeground(Color.red);
+                                          }
+                                            else{
+                                              wigoavailability.setText("Available");
+                                              wigoavailability.setForeground(Color.green);
+                                             }
+                                            //////////////////////////////////////////////////////////////
+                                            if(str5.equals(carofchosen)){
+                                              hiaceavailability.setText("Unavailable");
+                                              hiaceavailability.setForeground(Color.red);
+                                            }
+                                            else{
+                                              hiaceavailability.setText("Available");
+                                              hiaceavailability.setForeground(Color.green);
+                                          }
+                                            ///////////////////////////////////////////////////////////
+                                             if(str6.equals(carofchosen)){
+                                              civicavailability.setText("Unavailable");
+                                              civicavailability.setForeground(Color.red);
+                                            }
+                                            else{
+                                              civicavailability.setText("Available");
+                                              civicavailability.setForeground(Color.green);
+                                          }
+                                            ///////////////////////////////////////////////////////////
+                                             if(str7.equals(carofchosen)){
+                                              viosavailability.setText("Unavailable");
+                                              viosavailability.setForeground(Color.red);
+                                            }
+                                            else{
+                                              viosavailability.setText("Available");
+                                              viosavailability.setForeground(Color.green);
+                                          }  
+                                             return;
+                                          }  
+                                      }
+                                     }
+                                     catch(Exception ex){
+                                        JOptionPane.showMessageDialog(null, "Error Connecting to Data", "Error", JOptionPane.ERROR_MESSAGE);
+                                     }
+
                                     try {
                                      Class.forName("com.mysql.jdbc.Driver");
                                      Connection con = DriverManager.getConnection(url, user,pass );     
                                      Statement stm = con.createStatement();
-                                     pst = con.prepareStatement("insert into carbookings (bookingID, pickuplocation, dropofflocation, pickpdate, dropoffdate, pickuptime, dropofftime, nameofbooker, phoneofbooker, emailofbooker, carofbooker) values ("+numberrandom+",'"+pickuptext+"','"+
-                                             dropofftext+"','"+update+"','"+dropdate+"','"+timepick+"','"+timedrop+"','"+nameofbook+"','"+phoneofbook+"','"+emailaddofbook+"','"+carofchosen+"')");
+                                     pst = con.prepareStatement("insert into carbookings (bookingID, pickuplocation, dropofflocation, pickpdate, dropoffdate, pickuptime, dropofftime, nameofbooker, phoneofbooker, emailofbooker, carofbooker, payment) values ("+numberrandom+",'"+pickuptext+"','"+
+                                             dropofftext+"','"+update+"','"+dropdate+"','"+timepick+"','"+timedrop+"','"+nameofbook+"','"+phoneofbook+"','"+emailaddofbook+"','"+carofchosen+"','"+payment+"')");
                                      pst.executeUpdate();
                                      JOptionPane.showMessageDialog(null, "Successfully Booked your Request.", "Success", JOptionPane.INFORMATION_MESSAGE);
                                      con.close();
@@ -1868,20 +2070,166 @@ public  class System extends JFrame  implements ActionListener{
                                          {
                                      JOptionPane.showMessageDialog(null, "Error Connecting to Data", "Error", JOptionPane.ERROR_MESSAGE);
                                      }
+                                        for(JLabel prc : price){
+                                            prc.show();
+                                        }
+                                        for(JButton clonebtn : arrayclonebutton){
+                                            clonebtn.hide();
+                                        }
                                         for(JComboBox arraycombo : arraycombobox){
                                             arraycombo.setSelectedItem(null);
-                                        }         
-                                        titlebgclr.show();
-                                        titlebgclrshadow.show();
-                                        carrentpanel.show();
-                                        bookreservnum.show();
-                                        bookreservpanl.show();
-                                        contin.setEnabled(true);
-                                        namepanel.hide();   
-                                        bookreservpanel.hide();
-                                        fortunerpanel.hide();
-                                        bookingpanel.hide();
+                                        }  
+                                        savepdf.show();
                                    }
+            if(e.getSource() == savebutton){
+                String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+                String numID = area11.getText();
+                String name = nametextarea.getText();
+                String chosencar = chooseyourcar.getText();               
+                String ploc = pickuplocationarea.getText();
+                String drploc = dropofffieldloc.getText();
+                String drpffdt = datefieldloc.getText();
+                String pckdt = pickuptimeloc.getText();
+                String pcktm = pickminloc.getText();
+                String drptm = dropminloc.getText();
+                String phn = phonenumbertextarea.getText();
+                String ml = emailtextarea.getText();
+                String pymntmethd = String.valueOf(paymentmethod.getSelectedItem());
+                try {
+                    PdfWriter pdfwrite=null;
+                    String path=(name+" Rental Invoice.pdf");
+                    pdfwrite = new PdfWriter(path);
+                    PdfDocument pdfDocument = new PdfDocument(pdfwrite);
+                    pdfDocument.setDefaultPageSize(PageSize.A4);
+                    Document document = new Document(pdfDocument);
+                    float threecol = 198f;
+                    float twocol = 285f;
+                    float twocol150 = twocol+150f;
+                    float twocolumnWidth[] = {twocol150,twocol};
+                    float threeColumnWidth[] = {threecol,threecol,100f};
+                    float fullwidth[] ={threecol*3};
+                    Paragraph space = new Paragraph("\n");
+                    Paragraph twospace = new Paragraph("""
+                                                       
+                                                       
+                                                       """);  
+                    Table table = new Table(twocolumnWidth);
+                    table.addCell(new Cell().add("Rental Invoice").setBold().setFontSize(25f).setBorder(Border.NO_BORDER));
+                    Table nestedtabe = new Table(new float[]{twocol/2, twocol/2});
+                    nestedtabe.addCell(new Cell().add("Booking Number:").setBold().setBorder(Border.NO_BORDER));
+                    nestedtabe.addCell(new Cell().add(numID).setBorder(Border.NO_BORDER));
+                    nestedtabe.addCell(new Cell().add("Invoice Date:").setBold().setBorder(Border.NO_BORDER));
+                     nestedtabe.addCell(new Cell().add(timeStamp).setBorder(Border.NO_BORDER));
+                       table.addCell(nestedtabe.setBorder(Border.NO_BORDER));
+                       
+                     Border brd = new SolidBorder(com.itextpdf.kernel.color.Color.GRAY, 2f);
+                     Table divider = new Table(fullwidth);
+                     divider.setBorder(brd);
+                    document.add(table);
+                    document.add(space);
+                    document.add(divider);
+                     
+                    Table twoColumn1 = new Table(twocolumnWidth);
+                    twoColumn1.addCell(new Cell().add("Rentee Information").setBold().setFontSize(16f).setBorder(Border.NO_BORDER));    
+                     twoColumn1.addCell(new Cell().add("Renter Information").setBold().setFontSize(16f).setBorder(Border.NO_BORDER));
+                      document.add(space);
+                    document.add(twoColumn1.setMarginBottom(9f));
+                    
+                   Table twoColumn5 = new Table(twocolumnWidth);
+                    twoColumn5.addCell(new Cell().add("Name").setBold().setFontSize(12f).setBorder(Border.NO_BORDER));       
+                    twoColumn5.addCell(new Cell().add("Name of Company").setBold().setFontSize(12f).setBorder(Border.NO_BORDER));    
+                    twoColumn5.addCell(new Cell().add(name).setFontSize(9f).setBorder(Border.NO_BORDER));       
+                    twoColumn5.addCell(new Cell().add("Cars Inc.").setFontSize(9f).setBorder(Border.NO_BORDER)); 
+                    document.add(twoColumn5.setMarginBottom(4f));
+                    
+                   Table twoColumn6 = new Table(twocolumnWidth);
+                    twoColumn6.addCell(new Cell().add("Phone").setBold().setFontSize(12f).setBorder(Border.NO_BORDER));       
+                    twoColumn6.addCell(new Cell().add("Company Phone").setBold().setFontSize(12f).setBorder(Border.NO_BORDER));    
+                    twoColumn6.addCell(new Cell().add(phn).setFontSize(9f).setBorder(Border.NO_BORDER));       
+                    twoColumn6.addCell(new Cell().add("09458124652").setFontSize(9f).setBorder(Border.NO_BORDER)); 
+                    document.add(twoColumn6.setMarginBottom(4f));
+                    
+                     Table twoColumn7 = new Table(twocolumnWidth);
+                    twoColumn7.addCell(new Cell().add("Email").setBold().setFontSize(12f).setBorder(Border.NO_BORDER));       
+                    twoColumn7.addCell(new Cell().add("Company Email").setBold().setFontSize(12f).setBorder(Border.NO_BORDER));    
+                    twoColumn7.addCell(new Cell().add(ml).setFontSize(9f).setBorder(Border.NO_BORDER));       
+                    twoColumn7.addCell(new Cell().add("carsinc@gmail.com").setFontSize(9f).setBorder(Border.NO_BORDER)); 
+                    document.add(twoColumn7.setMarginBottom(15f));
+                    
+                     float oneColumnWidth[] = {twocol150};
+                                        
+                    Table twoColumn = new Table(twocolumnWidth);
+                    twoColumn.addCell(new Cell().add("Renting Information").setBold().setFontSize(16f).setBorder(Border.NO_BORDER));       
+                    document.add(twoColumn.setMarginBottom(9));
+                    
+                    Table twoColumn2 = new Table(twocolumnWidth);
+                    twoColumn2.addCell(new Cell().add("Pick-Up Location").setBold().setFontSize(10f).setBorder(Border.NO_BORDER));       
+                    twoColumn2.addCell(new Cell().add("Drop-Off Location").setBold().setFontSize(10f).setBorder(Border.NO_BORDER));       
+                    twoColumn2.addCell(new Cell().add(ploc).setFontSize(9f).setBorder(Border.NO_BORDER));       
+                    twoColumn2.addCell(new Cell().add(drploc).setFontSize(9f).setBorder(Border.NO_BORDER));       
+                    document.add(twoColumn2.setMarginBottom(4f));
+                    
+                    Table threeColumn3 = new Table(twocolumnWidth);
+                    threeColumn3.addCell(new Cell().add("Pick-up Date").setBold().setFontSize(10f).setBorder(Border.NO_BORDER));       
+                    threeColumn3.addCell(new Cell().add("Drop-Off Date").setBold().setFontSize(10f).setBorder(Border.NO_BORDER));       
+                    threeColumn3.addCell(new Cell().add(drpffdt).setFontSize(9f).setBorder(Border.NO_BORDER));       
+                    threeColumn3.addCell(new Cell().add(pckdt).setFontSize(9f).setBorder(Border.NO_BORDER)); 
+                    document.add(threeColumn3.setMarginBottom(4f));
+                    
+                    Table twoColumn4 = new Table(twocolumnWidth);
+                    twoColumn4.addCell(new Cell().add("Pick-Up Time").setBold().setFontSize(10f).setBorder(Border.NO_BORDER));       
+                    twoColumn4.addCell(new Cell().add("Time of Drop-off").setBold().setFontSize(10f).setBorder(Border.NO_BORDER));       
+                    twoColumn4.addCell(new Cell().add(pcktm).setFontSize(9f).setBorder(Border.NO_BORDER));       
+                    twoColumn4.addCell(new Cell().add(drptm).setFontSize(9f).setBorder(Border.NO_BORDER)); 
+                    document.add(twoColumn4.setMarginBottom(4f));
+                    
+                    Table onecolumn1 = new Table(oneColumnWidth);
+                    onecolumn1.addCell(new Cell().add("Car to Rent").setBold().setFontSize(10f).setBorder(Border.NO_BORDER));
+                    onecolumn1.addCell(new Cell().add(chosencar).setFontSize(9f).setBorder(Border.NO_BORDER)); 
+                    document.add(onecolumn1.setMarginBottom(4f));
+                    
+                    Table tabledivider2 = new Table(fullwidth);
+                    Border brd2 = new DashedBorder(com.itextpdf.kernel.color.Color.GRAY, 0.5f);
+                     document.add(tabledivider2.setBorder(brd2));
+                     document.add(space);
+                    
+                     Table threecolTable = new Table(threeColumnWidth);
+                     threecolTable.setBackgroundColor(com.itextpdf.kernel.color.Color.BLACK, 0.7f);
+                    threecolTable.addCell(new Cell().add("Name of Car").setBold().setFontSize(10f).setFontColor(com.itextpdf.kernel.color.Color.WHITE).setBorder(Border.NO_BORDER));       
+                    threecolTable.addCell(new Cell().add("Type of Payment").setBold().setFontSize(10f).setFontColor(com.itextpdf.kernel.color.Color.WHITE).setBorder(Border.NO_BORDER));       
+                    threecolTable.addCell(new Cell().add("Price per Hour").setBold().setFontSize(10f).setFontColor(com.itextpdf.kernel.color.Color.WHITE).setBorder(Border.NO_BORDER));       
+                    document.add(threecolTable.setMarginBottom(5f));
+                     
+                    Table threecolTable1 = new Table(threeColumnWidth);
+                    threecolTable1.addCell(new Cell().add(chosencar).setFontSize(10f).setBorder(Border.NO_BORDER));       
+                    threecolTable1.addCell(new Cell().add(pymntmethd).setFontSize(10f).setBorder(Border.NO_BORDER));       
+                    threecolTable1.addCell(new Cell().add("₱230").setFontSize(10f).setBorder(Border.NO_BORDER));       
+                    document.add(threecolTable1.setMarginBottom(70f));
+                    
+                    Table tabledivider4 = new Table(fullwidth);
+                    Border brd4 = new SolidBorder(com.itextpdf.kernel.color.Color.GRAY, 0.5f);
+                    document.add(tabledivider4.setMarginBottom(5f).setBorder(brd4));
+                    
+                    Table tabledivider3 = new Table(fullwidth);
+                    Border brd3 = new DashedBorder(com.itextpdf.kernel.color.Color.GRAY, 0.5f);
+                    document.add(tabledivider3.setBorder(brd2));
+
+                    document.close();
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(System.class.getName()).log(Level.SEVERE, null, ex);
+                }             
+                    savepdf.hide();
+                    titlebgclr.show();
+                    titlebgclrshadow.show();
+                    carrentpanel.show();
+                    bookreservnum.show();
+                    bookreservpanl.show();
+                    contin.setEnabled(true);
+                    namepanel.hide();
+                    bookreservpanel.hide();         
+                    fortunerpanel.hide();
+                    bookingpanel.hide()  ;
+            }        
     
                                      
             if(e.getSource() == fortunerreturnbtn){ 
@@ -1971,5 +2319,3 @@ public  class System extends JFrame  implements ActionListener{
             }
         }
 }
-
-

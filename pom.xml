@@ -6,6 +6,13 @@
     <version>1.0</version>
     <packaging>jar</packaging>
     <dependencies>
+<!-- https://mvnrepository.com/artifact/com.itextpdf/itext7-core -->
+<dependency>
+    <groupId>com.itextpdf</groupId>
+    <artifactId>itext7-core</artifactId>
+    <version>7.0.4</version>
+    <type>pom</type>
+</dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
