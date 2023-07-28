@@ -753,7 +753,7 @@ public  class System extends JFrame  implements ActionListener{
                        carrentpanel.add(fortunerprice);
                        
                        accordprice = new JLabel("₱1,699/8hrs");
-                       accordprice.setBounds(1125, 150, 400,100);
+                       accordprice.setBounds(1105, 150, 400,100);
                        accordprice.setFont(new Font("Arial", Font.BOLD, 20));
                        accordprice.setForeground(Color.BLACK);
                        carrentpanel.add(accordprice);
@@ -765,7 +765,7 @@ public  class System extends JFrame  implements ActionListener{
                        carrentpanel.add(civicprice);
                        
                        viosprice = new JLabel("₱1,699/8hrs");
-                       viosprice.setBounds(1125,635, 400,100);
+                       viosprice.setBounds(1105,635, 400,100);
                        viosprice.setFont(new Font("Arial", Font.BOLD, 20));
                        viosprice.setForeground(Color.BLACK);
                        carrentpanel.add(viosprice);
@@ -777,7 +777,7 @@ public  class System extends JFrame  implements ActionListener{
                        carrentpanel.add(wigoprice);
                        
                        hiaceprice = new JLabel("₱1,699/8hrs");
-                       hiaceprice.setBounds(1125, 395, 400,100);
+                       hiaceprice.setBounds(1105, 395, 400,100);
                        hiaceprice.setFont(new Font("Arial", Font.BOLD, 20));
                        hiaceprice.setForeground(Color.BLACK);
                        carrentpanel.add(hiaceprice);
